@@ -35,6 +35,11 @@ watch([make, price], () => {
   }
 })
 
+watch(() => route.query.make, (newMake) => {
+  make.value = newMake || 'All';
+});
+
+
 </script>
 
 <template>
@@ -54,10 +59,15 @@ watch([make, price], () => {
         <option value="lth">Low to High</option>
       </select>
       <div class="cards">
-        <div class="card" v-for="car in cars" @click="router.push(`/car/${car.id}`)">
+        <div class="card" v-for="car in cars" @click="router.push(`/car/${car.id}`)" :key="car.id">
           <h1>{{car.make}}</h1>
           <p>${{car.price}}</p>
         </div>
+    </div>
+    
+    <div class="history">
+        <button @click="router.back()">&lt;</button>
+        <button @click="router.forward()">></button>
     </div>
   </div>
 </template>
